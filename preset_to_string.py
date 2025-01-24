@@ -4,18 +4,16 @@ import errno
 import locale
 import os
 import pathlib
-import yaml
 from typing import Literal
+
+import yaml
 
 from invokeai.invocation_api import (
     BaseInvocation,
-    BaseInvocationOutput,
     InputField,
     InvocationContext,
-    OutputField,
-    invocation,
-    invocation_output,
     StringOutput,
+    invocation,
 )
 
 
@@ -28,7 +26,9 @@ def get_presets() -> dict:
         presets = yaml.safe_load(file)
     return presets
 
+
 get_presets.presets = None
+
 
 @invocation("preset_to_string", title="Preset to String", tags=["preset_to_string", "string"], version="1.0.0")
 class PresetToStringInvocation(BaseInvocation):
