@@ -3,7 +3,6 @@
 import errno
 import locale
 import os
-import pathlib
 from typing import Literal
 
 import yaml
@@ -18,16 +17,16 @@ from invokeai.invocation_api import (
 
 
 def get_presets() -> dict:
-    curdir = pathlib.Path(__file__).parent
+    curdir = os.path.dirname(os.path.abspath(__file__))
     yaml_path = os.path.join(curdir, "presets.yaml")
+
     if not os.path.exists(yaml_path):
         raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), yaml_path)
+
     with open(yaml_path, "rt", encoding=locale.getpreferredencoding()) as file:
         presets = yaml.safe_load(file)
+
     return presets
-
-
-get_presets.presets = None
 
 
 @invocation("preset_to_string", title="Preset to String", tags=["preset_to_string", "string"], version="1.0.0")
